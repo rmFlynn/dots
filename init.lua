@@ -46,7 +46,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
-vim.g.python_host_prog = "C:/Users/rory_flynn/AppData/Local/Programs/Python/Python312/python.exe"
+vim.g.python_host_prog = "C:/Users/rory_flynn/AppData/Local/Programs/Python/Python313/python.exe"
 vim.g.sqlite_clib_path = "C:/Users/rory_flynn/AppData/Local/nvim/nvim-win64/bin/sqlite3.dll"
 vim.cmd("filetype plugin on")
 
@@ -130,6 +130,14 @@ require('lazy').setup({
         { "<leader>dtf", "<cmd>DbtTest<cr>" },
         { "<leader>dm", "<cmd>lua require('dbtpal.telescope').dbt_picker()<cr>" },
     },
+ {
+    'vidocqh/data-viewer.nvim',
+    opts = {},
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "kkharji/sqlite.lua", -- Optional, sqlite support
+    }
+  },
     config = function()
         require("dbtpal").setup({
             path_to_dbt = "dbt",
@@ -141,6 +149,23 @@ require('lazy').setup({
         require("telescope").load_extension("dbtpal")
     end,
   },
+  -- {
+  -- 'kristijanhusak/vim-dadbod-ui',
+  -- dependencies = {
+  --   { 'tpope/vim-dadbod', lazy = true },
+  --   { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
+  -- },
+  -- cmd = {
+  --   'DBUI',
+  --   'DBUIToggle',
+  --   'DBUIAddConnection',
+  --   'DBUIFindBuffer',
+  -- },
+  -- init = function()
+  --   -- Your DBUI configuration
+  --   vim.g.db_ui_use_nerd_fonts = 1
+  -- end,
+  -- },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -287,14 +312,14 @@ require('lazy').setup({
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
-  {
-    'nvim-telescope/telescope-smart-history.nvim',
-    dependencies = { "kkharji/sqlite.lua" }
-  },
-  {
-    "nvim-telescope/telescope-project.nvim",
-    dependencies = { "nvim-telescope/telescope-file-browser.nvim" }
-  },
+  --{
+  --  'nvim-telescope/telescope-smart-history.nvim',
+  --  dependencies = { "kkharji/sqlite.lua" }
+  --},
+  --{
+  --  "nvim-telescope/telescope-project.nvim",
+  --  dependencies = { "nvim-telescope/telescope-file-browser.nvim" }
+  --},
 
   {
     "psf/black"
@@ -304,18 +329,18 @@ require('lazy').setup({
   -- },
   --
   -- Testing
-  {
-    "nvim-neotest/neotest",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim"
-    }
-  },
-  "nvim-neotest/neotest-python",
-  "nvim-neotest/neotest-plenary",
-  "nvim-neotest/neotest-vim-test",
-  "rouge8/neotest-rust",
+ -- {
+ --   "nvim-neotest/neotest",
+ --   dependencies = {
+ --     "nvim-lua/plenary.nvim",
+ --     "nvim-treesitter/nvim-treesitter",
+ --     "antoinemadec/FixCursorHold.nvim"
+ --   }
+ -- },
+ -- "nvim-neotest/neotest-python",
+ -- "nvim-neotest/neotest-plenary",
+ -- "nvim-neotest/neotest-vim-test",
+ -- "rouge8/neotest-rust",
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -536,8 +561,8 @@ require('telescope').setup {
   },
 }
 require("telescope").load_extension('file_browser')
-require('telescope').load_extension('smart_history')
-require("telescope").load_extension('project')
+-- require('telescope').load_extension('smart_history')
+-- require("telescope").load_extension('project')
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -599,7 +624,7 @@ vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]e
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope' })
 vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sp', require('telescope').extensions.project.project, { desc = '[S]earch [P]rojects' })
+-- vim.keymap.set('n', '<leader>sp', require('telescope').extensions.project.project, { desc = '[S]earch [P]rojects' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
@@ -809,9 +834,6 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
-  completion = {
-    completeopt = 'menu,menuone,noinsert',
-  },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -891,21 +913,21 @@ cmp.setup {
     vim.opt.spelloptions = "camel"
 
     local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-    vim.keymap.set("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-    vim.keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+    --vim.keymap.set("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
+    --vim.keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
-    require("neotest").setup({
-      adapters = {
-        require("neotest-python"),
-        require("neotest-rust")({
-          args = { "--no-capture" },
-        }),
-        require("neotest-plenary"),
-        require("neotest-vim-test")({
-          ignore_file_types = { "python", "vim", "lua" },
-        }),
-      },
-    })
+    --require("neotest").setup({
+    --  adapters = {
+    --    require("neotest-python"),
+    --    require("neotest-rust")({
+    --      args = { "--no-capture" },
+    --    }),
+    --    require("neotest-plenary"),
+    --    require("neotest-vim-test")({
+    --      ignore_file_types = { "python", "vim", "lua" },
+    --    }),
+    --  },
+    --})
 
     -- Diagnostic keymaps
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -989,6 +1011,13 @@ cmp.setup {
       debounce_text_changes = 150,
     }
 
+    require("lspconfig").r_language_server.setup {
+  on_attach = on_attach_custom,
+  -- Debounce "textDocument/didChange" notifications because they are slowly
+  -- processed (seen when going through completion list with `<C-N>`)
+  flags = { debounce_text_changes = 150 },
+}
+
     require("lspconfig").pyright.setup {}
 --    require("lspconfig").textlsp.setup {
 --       analysers = {
@@ -1068,6 +1097,12 @@ cmp.setup {
 --         },
 --       },
 --     }
+--
+require('lspconfig').sqls.setup{
+    on_attach = function(client, bufnr)
+        require('sqls').on_attach(client, bufnr)
+    end,
+}
 require("lspconfig").pylsp.setup {
   filetypes = { "python" },
   on_attach = on_attach,
@@ -1109,14 +1144,14 @@ require("lspconfig").pylsp.setup {
     }
   }
 }
-function FormatFile()
-  if vim.bo.filetype == 'python' then
-    vim.cmd('Black<CR>:%s/\\s\\+$//e')
-  elseif vim.bo.filetype == 'sql' then
-  else
-    FormatFunction()
-  end
-end
+-- function FormatFile()
+--   if vim.bo.filetype == 'python' then
+--     vim.cmd('Black<CR>:%s/\\s\\+$//e')
+--   elseif vim.bo.filetype == 'sql' then
+--   else
+--     FormatFunction()
+--   end
+-- end
 -- Try to get black good a proper
 --if vim.bo.filetype == "python" then
 vim.keymap.set('n', '<leader>mh', ":vertical resize -20 <CR>", { silent = true })

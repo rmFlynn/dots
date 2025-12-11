@@ -25,3 +25,8 @@ source $HOME/.bash_profile
 DOTS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 ln -s $DOTS_DIR ~/.config/nvim
 
+
+pip install pynvim 
+
+. C:\Users\rory_flynn\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+ls C:\Users\rory_flynn\Documents\WindowsPowerShell\

@@ -32,6 +32,11 @@ return {
              -- format = require("iron.fts.python").ipython,
              ignore_blank_lines = false, -- ignore blank lines when sending visual select lines
           },
+          R = {
+             command = {"C:/'Program Files'/R/R-4.4.2/bin/R.exe", "--no-save"},
+             -- format = require("iron.fts.python").ipython,
+             ignore_blank_lines = false, -- ignore blank lines when sending visual select lines
+          },
         },
         repl_open_cmd = view.split.vertical.botright()
         -- How the repl window will be displayed
@@ -67,6 +72,7 @@ return {
     vim.keymap.set('n', '<leader>rb', '<cmd>IronRepl sh<cr><cmd>IronAttach sh<cr>')
     vim.keymap.set('n', '<leader>rs', '<cmd>IronRepl ps<cr><cmd>IronAttach ps<cr>')
     vim.keymap.set('n', '<leader>rp', '<cmd>IronRepl python<cr><cmd>IronAttach ipython<cr>')
+    vim.keymap.set('n', '<leader>rr', '<cmd>IronRepl R<cr><cmd>IronAttach R<cr>')
     vim.keymap.set('n', '<leader><space>rr', '<cmd>IronRestart<cr>')
     vim.keymap.set('n', '<leader><space>rf', '<cmd>IronFocus<cr>')
     vim.keymap.set('n', '<leader><space>rh', '<cmd>IronHide<cr>')
