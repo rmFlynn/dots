@@ -3,42 +3,88 @@
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
+========                                    .-----.          ========
+========         .----------------------.   | === |          ========
+========         |.-""""""""""""""""""-.|   |-----|          ========
+========         ||                    ||   | === |          ========
+========         ||   KICKSTART.NVIM   ||   |-----|          ========
+========         ||                    ||   | === |          ========
+========         ||                    ||   |-----|          ========
+========         ||:Tutor              ||   |:::::|          ========
+========         |'-..................-'|   |____o|          ========
+========         `"")----------------(""`   ___________      ========
+========        /::::::::::|  |::::::::::\  \ no mouse \     ========
+========       /:::========|  |==hjkl==:::\  \ required \    ========
+========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
+========                                                     ========
+=====================================================================
+=====================================================================
 
 TODO:
  Add descriptions to fuGitive short cuts
 
 Kickstart.nvim is *not* a distribution.
 
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
+  Kickstart.nvim is *not* a distribution.
 
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
+  Kickstart.nvim is a starting point for your own configuration.
+    The goal is that you can read every line of code, top-to-bottom, understand
+    what your configuration is doing, and modify it to suit your needs.
 
-  If you don't know anything about Lua, I recommend taking some time to read through
-  a guide. One possible example:
-  - https://learnxinyminutes.com/docs/lua/
+    Once you've done that, you can start exploring, configuring and tinkering to
+    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
+    or immediately breaking it into modular pieces. It's up to you!
 
+    If you don't know anything about Lua, I recommend taking some time to read through
+    a guide. One possible example which will only take 10-15 minutes:
+      - https://learnxinyminutes.com/docs/lua/
 
-  And then you can explore or search through `:help lua-guide`
-  - https://neovim.io/doc/user/lua-guide.html
-
+    After understanding a bit more about Lua, you can use `:help lua-guide` as a
+    reference for how Neovim integrates Lua.
+    - :help lua-guide
+    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
 
 Kickstart Guide:
 
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
+  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
 
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
+    If you don't know what this means, type the following:
+      - <escape key>
+      - :
+      - Tutor
+      - <enter key>
+
+    (If you already know the Neovim basics, you can skip this step.)
+
+  Once you've completed that, you can continue working through **AND READING** the rest
+  of the kickstart init.lua.
+
+  Next, run AND READ `:help`.
+    This will open up a help window with some basic information
+    about reading, navigating and searching the builtin help documentation.
+
+    This should be the first place you go to look when you're stuck or confused
+    with something. It's one of my favorite Neovim features.
+
+    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
+    which is very useful when you're not exactly sure of what you're looking for.
+
+  I have left several `:help X` comments throughout the init.lua
+    These are hints about where to find more information about the relevant settings,
+    plugins or Neovim features used in Kickstart.
+
+   NOTE: Look for lines like this
+
+    Throughout the file. These are for you, the reader, to help you understand what is happening.
+    Feel free to delete them once you know what you're doing, but they should serve as a guide
+    for when you are first encountering a few different constructs in your Neovim config.
+
+If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
 
 I hope you enjoy your Neovim journey,
 - TJ
 
-P.S. You can delete this when you're done too. It's your config now :)
+P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- Set <space> as the leader key
@@ -497,6 +543,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 -- [[ Basic Keymaps ]]
+require 'keymaps'
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -637,72 +684,6 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-require('nvim-treesitter.install').compilers = { 'zig' }
-vim.defer_fn(function()
-  require('nvim-treesitter.configs').setup {
-    -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
-
-    -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-    auto_install = false,
-
-    -- highlight = { enable = true }, -- You cant use this idk why
-    indent = { enable = true },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = '<c-space>',
-        node_incremental = '<c-space>',
-        scope_incremental = '<c-s>',
-        node_decremental = '<M-space>',
-      },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
-  }
-end, 0)
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
@@ -767,167 +748,11 @@ require('which-key').register({
   ['<leader>h'] = { 'Git [H]unk' },
 }, { mode = 'v' })
 
--- mason-lspconfig requires that these setup functions are called in this order
--- before setting up the servers.
-require('mason').setup()
-require('mason-lspconfig').setup()
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-local servers = {
-  -- clangd = {},
-  -- gopls = {},
-  pylsp = {},
-  rust_analyzer = {},
-  tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs' } },
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = true },
-      -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
-    },
-  },
-}
+-- [[ Install `lazy.nvim` plugin manager ]]
+require 'lazy-bootstrap'
 
--- Setup neovim lua configuration
-require('neodev').setup()
-
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
--- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
-
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
-
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
-
--- [[ Configure nvim-cmp ]]
--- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'path' },
-  },
-}
-
-    -- "/usr/bin/python3.10'
-    -- vim.g.python3_host_prog = '~/.config/nvim/nvim_venv/bin/python3'
-    -- vim.g.node_host_prog = '~/.nvm/versions/node/v20.4.0/bin/node'
-    vim.keymap.set('n', '<leader>v', "<c-v>", { silent = true })
-
-    vim.keymap.set('n', '<C-J>', "<C-W><C-J>", { silent = true })
-    vim.keymap.set('n', '<C-K>', "<C-W><C-K>", { silent = true })
-    vim.keymap.set('n', '<C-L>', "<C-W><C-L>", { silent = true })
-    vim.keymap.set('n', '<C-H>', "<C-W><C-H>", { silent = true })
-
-
-    --Grammer
-    --
-    -- vim.g.grammarous_jar_url = 'https://www.languagetool.org/download/LanguageTool-5.9.zip'
-
-
-    -- python-style
-    vim.g.python_style = 'google'
-
-    -- latext
-    vim.g.vimtex_view_method = 'zathura'
-
-    -- enable AutoSave on Vim startup
-    vim.g.auto_save = 1
-
-    -- Maintain undo history between sessions
-    vim.undofile = true
-    vim.undodir = '~/.vim/undodir'
-    -- nnoremap <leader>rc :ReplRunCell<CR>
-    -- nmap <leader>rr <Plug>ReplSendLine
-    -- vmap <leader>rr <Plug>ReplSendVisual
-    -- let cmdline_map_send           = '<Space>'
-    --let cmdline_map_send_and_stay  = '<LocalLeader><Space>'
-    --let cmdline_map_source_fun     = '<LocalLeader>f'
-    --let cmdline_map_send_paragraph = '<LocalLeader>p'
-    --let cmdline_map_send_block     = '<LocalLeader>b'
-    --let cmdline_map_quit           = '<LocalLeader>q'
-
-    -- " => Spelling stuff
-    -- """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    vim.opt.spelloptions = "camel"
-
-    local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-    --vim.keymap.set("i", "<TAB>", 'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()', opts)
-    --vim.keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
-
-    --require("neotest").setup({
-    --  adapters = {
-    --    require("neotest-python"),
-    --    require("neotest-rust")({
-    --      args = { "--no-capture" },
-    --    }),
-    --    require("neotest-plenary"),
-    --    require("neotest-vim-test")({
-    --      ignore_file_types = { "python", "vim", "lua" },
-    --    }),
-    --  },
-    --})
+-- [[ Configure and install plugins ]]
+require 'lazy-plugins'
 
     -- Diagnostic keymaps
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -1019,85 +844,6 @@ cmp.setup {
 }
 
     require("lspconfig").pyright.setup {}
---    require("lspconfig").textlsp.setup {
---       analysers = {
---         languagetool = {
---           enabled = false,
---           check_text = {
---             on_open = true,
---             on_save = true,
---             on_change = false,
---           }
---         },
---         gramformer = {
---           -- gramformer dependency needs to be installed manually
---           enabled = true,
---           gpu = false,
---           check_text = {
---             on_open = false,
---             on_save = true,
---             on_change = false,
---           }
---         },
---         hf_checker = {
---           enabled = true,
---           gpu = false,
---           model = 'pszemraj/flan-t5-large-grammar-synthesis',
---           -- model='pszemraj/grammar-synthesis-large',
---           min_length = 40,
---           check_text = {
---             on_open = false,
---             on_save = true,
---             on_change = false,
---           }
---         },
---         hf_completion = {
---           enabled = true,
---           gpu = false,
---           model = 'bert-base-multilingual-cased',
---           topk = 5,
---         },
---         openai = {
---           enabled = false,
---           api_key = '<MY_API_KEY>',
---           check_text = {
---             on_open = false,
---             on_save = false,
---             on_change = false,
---           },
---           -- model = 'text-ada-001',
---           model = 'text-babbage-001',
---           -- model = 'text-curie-001',
---           -- model = 'text-davinci-003',
---           edit_model = 'text-davinci-edit-001',
---           max_token = 16,
---         },
---         grammarbot = {
---           enabled = false,
---           api_key = '<MY_API_KEY>',
---           -- longer texts are split, this parameter sets the maximum number of splits per analysis
---           input_max_requests = 1,
---           check_text = {
---             on_open = false,
---             on_save = false,
---             on_change = false,
---           }
---         },
---       },
---       documents = {
---         org = {
---           org_todo_keywords = {
---             'TODO',
---             'IN_PROGRESS',
---             'DONE'
---           },
---         },
---         txt = {
---           parse = true,
---         },
---       },
---     }
---
 require('lspconfig').sqls.setup{
     on_attach = function(client, bufnr)
         require('sqls').on_attach(client, bufnr)
