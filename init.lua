@@ -46,8 +46,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
-vim.g.python_host_prog = "C:/Users/rory_flynn/AppData/Local/Programs/Python/Python313/python.exe"
-vim.g.sqlite_clib_path = "C:/Users/rory_flynn/AppData/Local/nvim/nvim-win64/bin/sqlite3.dll"
+vim.g.python_host_prog = "/home/rmf/dots/.venv/bin/python"
+-- vim.g.sqlite_clib_path = "C:/Users/rory_flynn/AppData/Local/nvim/nvim-win64/bin/sqlite3.dll"
 vim.cmd("filetype plugin on")
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -1207,7 +1207,7 @@ vim.keymap.set('n', '<leader>ml', ":vertical resize +20 <CR>", { silent = true }
     require("jupynium").setup({
       --- For Conda environment named "jupynium",
       -- python_host = { "conda", "run", "--no-capture-output", "-n", "jupynium", "python" },
-      python_host = "C:\\Users\\rory_flynn\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      -- python_host = "C:\\Users\\rory_flynn\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
 
       default_notebook_URL = "localhost:8888/nbclassic",
 
