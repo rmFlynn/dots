@@ -23,7 +23,7 @@
 TODO:
  Add descriptions to fuGitive short cuts
 
-Kickstart.nvim is *not* a distribution.
+What is Kickstart?
 
   Kickstart.nvim is *not* a distribution.
 
@@ -195,23 +195,6 @@ require('lazy').setup({
         require("telescope").load_extension("dbtpal")
     end,
   },
-  -- {
-  -- 'kristijanhusak/vim-dadbod-ui',
-  -- dependencies = {
-  --   { 'tpope/vim-dadbod', lazy = true },
-  --   { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
-  -- },
-  -- cmd = {
-  --   'DBUI',
-  --   'DBUIToggle',
-  --   'DBUIAddConnection',
-  --   'DBUIFindBuffer',
-  -- },
-  -- init = function()
-  --   -- Your DBUI configuration
-  --   vim.g.db_ui_use_nerd_fonts = 1
-  -- end,
-  -- },
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -235,7 +218,6 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -471,7 +453,6 @@ require('lazy').setup({
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
-  require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
   require 'custom.plugins.jupyter',
   require 'custom.plugins.init',
@@ -685,68 +666,6 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 
--- [[ Configure LSP ]]
---  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-
--- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
--- register which-key VISUAL mode
--- required for visual <leader>hs (hunk stage) to work
-require('which-key').register({
-  ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
-}, { mode = 'v' })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 require 'lazy-bootstrap'
@@ -754,152 +673,6 @@ require 'lazy-bootstrap'
 -- [[ Configure and install plugins ]]
 require 'lazy-plugins'
 
-    -- Diagnostic keymaps
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-    -- Set command for fugitive
-
-    vim.keymap.set('n', '<leader>gc', ":Git commit<CR>", {})
-    vim.keymap.set('n', '<leader>gau', ":Git add -u<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gaf', ":Git add %<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gs', ":Git status<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gh', ":Flog<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdd', ":Gvdiffsplit<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh0', ":Gvdiffsplit HEAD<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh1', ":Gvdiffsplit HEAD 1<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh2', ":Gvdiffsplit HEAD 2<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh3', ":Gvdiffsplit HEAD 3<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh4', ":Gvdiffsplit HEAD 4<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdh5', ":Gvdiffsplit HEAD 5<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdom', ":Git diff main<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdtm', ":Git difftool main<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gdm', ":Gvdiffsplit main<CR>", { silent = true })
-    vim.keymap.set('n', '<leader>gpl', ":Git pull<CR>", {})
-    vim.keymap.set('n', '<leader>gps', ":Git push<CR>", {})
-
-    -- Set configuration for specific filetype.
-    cmp.setup.filetype('gitcommit', {
-      sources = cmp.config.sources({
-        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-      }, {
-        { name = 'buffer' },
-      })
-    })
-    -- Set configuration for specific filetype.
-    cmp.setup.filetype('gitcommit', {
-      sources = cmp.config.sources({
-        { name = 'pylsp' }, -- You can specify the `cmp_git` source if you were installed it.
-      }, {
-        { name = 'buffer' },
-      })
-    })
-
-
-    -- Mappings.
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    local opts = { noremap = true, silent = true }
-    vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-    vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
-
-    -- Use an on_attach function to only map the following keys
-    -- after the language server attaches to the current buffer
-    local on_attach = function(client, bufnr)
-      -- Enable completion triggered by <c-x><c-o>
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-      -- Mappings.
-      -- See `:help vim.lsp.*` for documentation on any of the below functions
-      local bufopts = { noremap = true, silent = true, buffer = bufnr }
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-      vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-      vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-      vim.keymap.set('n', '<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workleader_folders()))
-      end, bufopts)
-      vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-      vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-      vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-      vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-    end
-
-    local lsp_flags = {
-      -- This is the default in Nvim 0.7+
-      debounce_text_changes = 150,
-    }
-
-    require("lspconfig").r_language_server.setup {
-  on_attach = on_attach_custom,
-  -- Debounce "textDocument/didChange" notifications because they are slowly
-  -- processed (seen when going through completion list with `<C-N>`)
-  flags = { debounce_text_changes = 150 },
-}
-
-    require("lspconfig").pyright.setup {}
-require('lspconfig').sqls.setup{
-    on_attach = function(client, bufnr)
-        require('sqls').on_attach(client, bufnr)
-    end,
-}
-require("lspconfig").pylsp.setup {
-  filetypes = { "python" },
-  on_attach = on_attach,
-  flags = lsp_flags,
-  settings = {
-    pylsp = {
-      plugins = {
-        pylint = {
-          enabled = true,
-        },
-        pyright = {
-          enabled = true,
-        },
-        textlsp = {
-          enabled = true,
-        },
-        isort = {
-          enabled = true,
-        },
-        pydocstyle = {
-          ignore = { "D200", "D213", "D203", "D212" },
-          enabled = true,
-        },
-        pycodestyle = {
-          maxLineLength = 100
-        },
-        flake8 = {
-          enabled = false,
-        },
-        black = {
-          enabled = true,
-          maxLineLength = 100
-        },
-        ruff = {
-          enabled = true,
-          maxLineLength = 100
-        }
-      }
-    }
-  }
-}
--- function FormatFile()
---   if vim.bo.filetype == 'python' then
---     vim.cmd('Black<CR>:%s/\\s\\+$//e')
---   elseif vim.bo.filetype == 'sql' then
---   else
---     FormatFunction()
---   end
--- end
--- Try to get black good a proper
---if vim.bo.filetype == "python" then
 vim.keymap.set('n', '<leader>mh', ":vertical resize -20 <CR>", { silent = true })
 vim.keymap.set('n', '<leader>ml', ":vertical resize +20 <CR>", { silent = true })
 

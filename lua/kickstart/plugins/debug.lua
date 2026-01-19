@@ -140,10 +140,8 @@ return {
         },
       },
     }
-<<<<<<< HEAD
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     vim.keymap.set('n', '<leader>dv', dapui.toggle, { desc = 'Debug: See last session result.' })
-=======
 
     -- Change breakpoint icons
     -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
@@ -156,8 +154,7 @@ return {
     --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
     --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     -- end
-
->>>>>>> f2309053c75046d5e33084938ef9bba66d9e427e
+    --
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
