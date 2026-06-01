@@ -28,6 +28,7 @@ return {
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-telescope/telescope-file-browser.nvim', dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' } },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -58,10 +59,37 @@ return {
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
+        --     i = {
+        --       ['<C-u>'] = false,
+        --       ['<C-d>'] = false,
+        --       ["<C-o>"] = "select_vertical",
+        --       ["<C-S-o>"] = "select_horizontal",
+        --     },
+        --     n = {
+        --       ["<C-o>"] = "select_vertical",
+        --       ["<C-S-o>"] = "select_horizontal",
+        --     },
+        --  },
+        --
+        --   history = {
+        --     path = '~/.local/share/nvim/databases/tele--     scope_history.sqlite3',
+        --     limit = 100,
         -- },
         -- pickers = {}
         extensions = {
+          file_browser = {
+            theme = 'ivy',
+            -- disables netrw and use telescope-file-browser in its place
+            hijack_netrw = true,
+            mappings = {
+              ['i'] = {
+                -- your custom insert mode mappings
+              },
+              ['n'] = {
+                -- your custom normal mode mappings
+              },
+            },
+          },
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
@@ -71,6 +99,8 @@ return {
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      pcall(require('telescope').load_extension, 'file_browser')
+      pcall(require('telescope').load_extension, 'fzf')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -82,7 +112,7 @@ return {
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>o', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -108,6 +138,15 @@ return {
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
     end,
+    --vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+    --vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
+    -- open file_browser with the path of the current buffer
+    --vim.keymap.set("n", "<leader>so", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
+    -- open file_browser with the path of the current buffer
+    vim.keymap.set('n', '<leader>so', ':Telescope file_browser path=%:p:h select_buffer=true<CR>'),
+    vim.keymap.set('n', '<leader>sb', function()
+      require('telescope').extensions.file_browser.file_browser()
+    end),
   },
 }
 -- vim: ts=2 sts=2 sw=2 et
