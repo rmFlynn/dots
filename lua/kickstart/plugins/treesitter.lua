@@ -1,5 +1,9 @@
 ---@module 'lazy'
 ---@type LazySpec
+if vim.g.vscode then
+    return {}
+end
+
 return {
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',

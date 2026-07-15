@@ -2,6 +2,10 @@
 --
 -- Adds all iron con fig
 --
+if vim.g.vscode then
+    return {}
+end
+
 return {
   -- repl
   'hkupty/iron.nvim',

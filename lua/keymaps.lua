@@ -75,3 +75,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+
+-- move text up and down
+vim.keymap.set("v", "J", ":m .+1<CR>==", opts)
+vim.keymap.set("v", "K", ":m .-2<CR>==", opts)
+
+-- paste preserves primal yanked piece
+vim.keymap.set("v", "p", '"_dP', opts)
+
+if vim.g.vscode then
+  require 'custom.vscode_keymaps'
+end

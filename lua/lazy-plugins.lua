@@ -17,7 +17,6 @@ require('lazy').setup({
   '907th/vim-auto-save',
   'chrisbra/Colorizer',
   'rbong/vim-flog',
-  --'nanotee/sqls.nvim',
 
   -- modular approach: using `require 'path.name'` will
   -- include a plugin definition from file lua/path/name.lua
@@ -40,9 +39,9 @@ require('lazy').setup({
 
   require 'kickstart.plugins.treesitter',
 
-  require 'custom.plugins.gruvbox',
-
   require 'custom.plugins.iron',
+
+  require 'custom.plugins.gruvbox',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and

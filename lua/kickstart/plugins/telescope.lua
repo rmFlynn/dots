@@ -7,6 +7,9 @@
 
 ---@module 'lazy'
 ---@type LazySpec
+if vim.g.vscode then
+    return {}
+end
 return {
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -69,23 +72,10 @@ return {
         -- defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --     i = {
-        --       ['<C-u>'] = false,
-        --       ['<C-d>'] = false,
-        --       ["<C-o>"] = "select_vertical",
-        --       ["<C-S-o>"] = "select_horizontal",
-        --     },
-        --     n = {
-        --       ["<C-o>"] = "select_vertical",
-        --       ["<C-S-o>"] = "select_horizontal",
-        --     },
-        --  },
-        --
-        --   history = {
-        --     path = '~/.local/share/nvim/databases/tele--     scope_history.sqlite3',
-        --     limit = 100,
+        --   },
         -- },
         -- pickers = {}
+      -- Super nice file browser
         extensions = {
           file_browser = {
             theme = 'ivy',
@@ -107,8 +97,8 @@ return {
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
+      -- Super nice file browser
       pcall(require('telescope').load_extension, 'file_browser')
-      pcall(require('telescope').load_extension, 'fzf')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
@@ -120,6 +110,7 @@ return {
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+      -- Super nice file browser
       vim.keymap.set('n', '<leader>o', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
@@ -184,11 +175,7 @@ return {
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
     end,
-    --vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-    --vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
-    -- open file_browser with the path of the current buffer
-    --vim.keymap.set("n", "<leader>so", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
-    -- open file_browser with the path of the current buffer
+    -- Super nice file browser
     vim.keymap.set('n', '<leader>so', ':Telescope file_browser path=%:p:h select_buffer=true<CR>'),
     vim.keymap.set('n', '<leader>sb', function()
       require('telescope').extensions.file_browser.file_browser()

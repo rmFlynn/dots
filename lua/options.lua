@@ -3,16 +3,13 @@
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Set <space> as the leader key
 -- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
 vim.g.python_host_prog = '/home/rmf/dots/.venv/bin/python'
--- vim.g.sqlite_clib_path = "C:/Users/rory_flynn/AppData/Local/nvim/nvim-win64/bin/sqlite3.dll"
-vim.cmd 'filetype plugin on'
--- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.auto_save = 1
+--vim.cmd 'filetype plugin on'
+--vim.g.have_nerd_font = false
 -- Make line numbers default
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -80,13 +77,3 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 
 -- vim: ts=2 sts=2 sw=2 et
-
--- Remove trailling white space on save
---vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
---  pattern = { '*' },
---  command = [[%s/\s\+$//e]],
---})
-
-vim.g.auto_save = 1
--- Set highlight on search
---vim.o.hlsearch = false
