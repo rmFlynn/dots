@@ -84,18 +84,17 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
-
 -- [[ Setting options ]]
 require 'options'
 
 -- [[ Basic Keymaps ]]
 require 'keymaps'
 
--- [[ Install `lazy.nvim` plugin manager ]]
-require 'lazy-bootstrap'
+-- [[ Set up vim.pack ]]
+require 'pack'
 
 -- [[ Configure and install plugins ]]
-require 'lazy-plugins'
+require 'plugins'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
