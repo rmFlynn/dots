@@ -19,6 +19,7 @@ vim.g.have_nerd_font = true
 vim.g.mapleader = ';'
 vim.g.maplocalleader = ';'
 vim.g.python_host_prog = '/home/rmf/dots/.venv/bin/python'
+-- AutoSave
 vim.g.auto_save = 1
 --vim.cmd 'filetype plugin on'
 --vim.g.have_nerd_font = false
@@ -44,7 +45,9 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 vim.o.breakindent = true
 
 -- Enable undo/redo changes even after closing and reopening a file
+-- Undo persistence
 vim.o.undofile = true
+vim.undodir = '~/.vim/undodir'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
@@ -89,3 +92,31 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 
 -- vim: ts=2 sts=2 sw=2 et
+
+
+-- WSL clipboard support
+local in_wsl = os.getenv 'WSL_DISTRO_NAME' ~= nil
+if in_wsl then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = { 'clip.exe' },
+      ['*'] = { 'clip.exe' },
+    },
+    paste = {
+      ['+'] = { 'powershell.exe -c [Console]::\'Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))\'' },
+      ['*'] = { 'powershell.exe -c [Console]::\'Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))\'' },
+    },
+    cache_enabled = 0,
+  }
+end
+
+
+-- Spelling
+vim.opt.spell = true
+vim.opt.spelllang = 'en_us'
+vim.opt.spelloptions = 'camel'
+
+-- Text formatting
+vim.cmd 'set fo+=t'
+vim.cmd 'set textwidth=87'

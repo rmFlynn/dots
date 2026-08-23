@@ -1,13 +1,14 @@
 local function gh(repo) return 'https://github.com/' .. repo end
 
+if vim.g.vscode then
+  return
+end
+
 if not vim.g.vscode then
     vim.pack.add { gh 'hkupty/iron.nvim' }
 end
 
 local iron = require("iron.core")
-
-
-
 local view = require("iron.view")
 -- One can always use the default commands from vim directly
 
