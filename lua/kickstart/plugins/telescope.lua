@@ -40,14 +40,36 @@ require('telescope').setup {
   -- You can put your default mappings / updates / etc. in here
   --  All the info you're looking for is in `:help telescope.setup()`
   --
-  -- defaults = {
-  --   mappings = {
-  --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-  --   },
-  -- },
+  defaults = {
+    mappings = {
+      i = {
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
+        ["<C-o>"] = "select_vertical",
+        ["<C-S-o>"] = "select_horizontal",
+      },
+      n = {
+        ["<C-o>"] = "select_vertical",
+        ["<C-S-o>"] = "select_horizontal",
+      },
+    },
+  },
   -- pickers = {}
   extensions = {
     ['ui-select'] = { require('telescope.themes').get_dropdown() },
+    file_browser = {
+      theme = "ivy",
+      -- disables netrw and use telescope-file-browser in its place
+      hijack_netrw = true,
+      mappings = {
+        ["i"] = {
+          -- your custom insert mode mappings
+        },
+        ["n"] = {
+          -- your custom normal mode mappings
+        },
+      },
+    },
   },
 }
 

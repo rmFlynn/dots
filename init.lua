@@ -84,6 +84,19 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- Use vim.fn.expand to properly evaluate the system's temporary directory
+local tmp = vim.fn.expand('$TMPDIR') -- Linux/macOS
+if tmp == '' or tmp == '$TMPDIR' then
+  tmp = vim.fn.expand('$TEMP')       -- Windows alternative
+end
+
+if tmp ~= '' then
+  vim.opt.directory = tmp .. '/nvim/swap//'
+  vim.opt.backupdir = tmp .. '/nvim/backup//'
+  vim.opt.undodir   = tmp .. '/nvim/undo//'
+end
+
+
 -- [[ Setting options ]]
 require 'options'
 
@@ -98,3 +111,4 @@ require 'plugins'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
