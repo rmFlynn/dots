@@ -28,13 +28,10 @@ require 'kickstart.plugins.autopairs'
 -- require 'kickstart.plugins.neo-tree'
 require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
--- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
+-- NOTE: You can add your own plugins, configuration, etc. in `lua/custom/plugins/*.lua`.
 --
 --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
 require 'custom.plugins'
 
---  '907th/vim-auto-save',
---  'chrisbra/Colorizer',
---  'rbong/vim-flog',
 
 -- vim: ts=2 sts=2 sw=2 et
