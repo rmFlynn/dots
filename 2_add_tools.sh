@@ -13,4 +13,23 @@ ls C:\Users\rory_flynn\Documents
 nvm  ls-remote
 nvm install --lts
 
+./kickstart/plugins/autoformat.lua
+./kickstart/plugins/autoformat.so
+./kickstart.so
+       no field package.preload['kickstart.plugins.autoformat']
+        no file './kickstart/plugins/autoformat.lua'
+        no file '/home/runner/work/neovim/neovim/.deps/usr/share/luajit-2.1/kickstart/plugins/autoformat.lua'
+        no file '/usr/local/share/lua/5.1/kickstart/plugins/autoformat.lua'
+        no file '/usr/local/share/lua/5.1/kickstart/plugins/autoformat/init.lua'
+        no file '/home/runner/work/neovim/neovim/.deps/usr/share/lua/5.1/kickstart/plugins/autoformat.lua'
+        no file '/home/runner/work/neovim/neovim/.deps/usr/share/lua/5.1/kickstart/plugins/autoformat/init.lua'
+        no file './kickstart/plugins/autoformat.so'
+        no file '/usr/local/lib/lua/5.1/kickstart/plugins/autoformat.so'
+        no file '/home/runner/work/neovim/neovim/.deps/usr/lib/lua/5.1/kickstart/plugins/autoformat.so'
+        no file '/usr/local/lib/lua/5.1/loadall.so'
+        no file './kickstart.so'
+        no file '/usr/local/lib/lua/5.1/kickstart.so'
+        no file '/home/runner/work/neovim/neovim/.deps/usr/lib/lua/5.1/kickstart.so'
+        no file '/usr/local/lib/lua/5.1/loadall.so'
+
 
