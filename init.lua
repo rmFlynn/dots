@@ -85,16 +85,21 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- Use vim.fn.expand to properly evaluate the system's temporary directory
-local tmp = vim.fn.expand('$TMPDIR') -- Linux/macOS
-if tmp == '' or tmp == '$TMPDIR' then
-  tmp = vim.fn.expand('$TEMP')       -- Windows alternative
+--local tmp = vim.fn.expand('$TMPDIR') -- Linux/macOS
+--if tmp == '' or tmp == '$TMPDIR' then
+--  tmp = vim.fn.expand('$TEMP')       -- Windows alternative
+--end
+
+-- Define the static undo directory path
+local undodir = vim.fn.expand('~/.local/share/nvim/undo')
+
+-- Create the directory if it does not exist
+if vim.fn.isdirectory(undodir) == 0 then
+    vim.fn.mkdir(undodir, 'p')
 end
 
-if tmp ~= '' then
-  vim.opt.directory = tmp .. '/nvim/swap//'
-  vim.opt.backupdir = tmp .. '/nvim/backup//'
-  vim.opt.undodir   = tmp .. '/nvim/undo//'
-end
+vim.opt.undodir = undodir
+vim.opt.undofile = true -- Enable persistent undo
 
 
 -- [[ Setting options ]]

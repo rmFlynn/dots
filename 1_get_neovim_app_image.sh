@@ -4,29 +4,9 @@
 
 # you can get the version here
 #
-VERSION=v0.9.4
 
-mkdir appimage
-cd appimage
-wget https://github.com/neovim/neovim/releases/download/$VERSION/nvim.appimage
-chmod +x nvim.appimage
-./nvim.appimage --appimage-extract
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+chmod u+x nvim-linux-x86_64.appimage
+sudo mkdir -p /opt/nvim
+sudo mv nvim-linux-x86_64.appimage /opt/nvim/nvim
 
-cd ..
-VIMPATH=$(realpath ./appimage/squashfs-root/usr/bin/nvim)
-mkdir -p $HOME/bin
-ln -sf $VIMPATH $HOME/bin/nvim
-
-TEXTTOPROFILE='export PATH="$HOME/bin:$PATH"'
-grep "$TEXTTOPROFILE"  $HOME/.bash_profile || echo $TEXTTOPROFILE >> $HOME/.bash_profile
-
-source $HOME/.bash_profile
-
-DOTS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ln -s $DOTS_DIR ~/.config/nvim
-
-
-pip install pynvim 
-
-. C:\Users\rory_flynn\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-ls C:\Users\rory_flynn\Documents\WindowsPowerShell\

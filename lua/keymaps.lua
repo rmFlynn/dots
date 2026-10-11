@@ -91,6 +91,26 @@ vim.keymap.set("v", "K", ":m .-2<CR>==", opts)
 -- paste preserves primal yanked piece
 vim.keymap.set("v", "p", '"_dP', opts)
 
+
+if in_wsl then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = { 'clip.exe' },
+      ['*'] = { 'clip.exe' },
+    },
+    paste = {
+      ['+'] = {
+        'powershell.exe -c [Console]::\'Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))\'' },
+      ['*'] = {
+        'powershell.exe -c [Console]::\'Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))\'' },
+    },
+    cache_enabled = 0,
+  }
+else 
+  vim.o.clipboard = 'unnamedplus'
+end
+
 if vim.g.vscode then
   require 'custom.vscode_keymaps'
 end
